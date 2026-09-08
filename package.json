@@ -1,0 +1,12 @@
+{
+  "name": "infranex-static",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite serve --port=3000 --host=0.0.0.0",
+    "build": "mkdir -p dist && cp -r index.html styles.css script.js public dist/ 2>/dev/null || cp index.html styles.css script.js dist/"
+  },
+  "devDependencies": {
+    "vite": "^6.2.3"
+  }
+}
