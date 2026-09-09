@@ -530,6 +530,105 @@ p { font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 1.25rem; }
   transform: translateY(0);
 }
 
+/* Detailed Case Study */
+.breadcrumb {
+  display: inline-block;
+  margin-bottom: 2rem;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+.breadcrumb:hover { color: var(--azure-blue); }
+.pt-32 { padding-top: calc(var(--header-height) + 4rem); }
+.pb-8 { padding-bottom: 2rem; }
+.notice {
+  background-color: var(--bg-secondary);
+  border-left: 4px solid var(--azure-blue);
+  padding: 1.5rem;
+  font-size: 1.0625rem;
+  color: var(--text-secondary);
+  margin-top: 2rem;
+  border-radius: 0 4px 4px 0;
+}
+.article-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.article-section {
+  margin-bottom: 5rem;
+}
+.article-section h2 {
+  font-size: 2.25rem;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+.article-section h3 {
+  font-size: 1.5rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  color: var(--azure-blue);
+}
+.article-section p {
+  font-size: 1.1875rem;
+  margin-bottom: 1.5rem;
+}
+.article-section ul {
+  margin-bottom: 1.5rem;
+  padding-left: 1.5rem;
+}
+.article-section li {
+  font-size: 1.1875rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.75rem;
+  list-style-type: disc;
+}
+.highlight-box {
+  background-color: var(--azure-light);
+  padding: 2rem;
+  border-radius: 6px;
+  margin: 2rem 0;
+  font-weight: 500;
+  color: var(--azure-blue);
+  font-size: 1.1875rem;
+}
+.comparison-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.comparison-item {
+  background: var(--bg-primary);
+  border: 1px solid var(--border-color);
+  padding: 1.5rem;
+  border-radius: 6px;
+}
+.comparison-item h4 {
+  margin-bottom: 0.5rem;
+  font-size: 1.125rem;
+}
+.comparison-item p {
+  font-size: 1rem !important;
+  margin-bottom: 0 !important;
+}
+.principle-callout {
+  text-align: center;
+  padding: 6rem 2rem;
+  background-color: var(--text-primary);
+  color: var(--bg-primary);
+  border-radius: 8px;
+  margin: 4rem 0;
+}
+.principle-callout p {
+  font-size: 1.75rem !important;
+  font-weight: 600;
+  color: var(--bg-primary) !important;
+  max-width: 800px;
+  margin: 0 auto !important;
+  line-height: 1.4;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
   .hero-container,

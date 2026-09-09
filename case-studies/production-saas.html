@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Production SaaS Platform on Azure | INFRANEX</title>
+    <meta name="description" content="Reference architecture for secure and scalable Azure SaaS infrastructure using Application Gateway, private connectivity, managed identity, Terraform, Azure DevOps and Azure monitoring.">
+    <link rel="canonical" href="https://yourdomain.com/case-studies/production-saas.html">
+    
+    <meta property="og:title" content="Production SaaS Platform on Azure | INFRANEX">
+    <meta property="og:description" content="Reference architecture for secure and scalable Azure SaaS infrastructure using Application Gateway, private connectivity, managed identity, Terraform, Azure DevOps and Azure monitoring.">
+    <meta property="og:type" content="article">
+    
+    <!-- Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Assets -->
+    <link rel="stylesheet" href="../styles.css">
+    <script src="../script.js" defer></script>
+</head>
+<body>
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="header" id="header">
+        <div class="container header-container">
+            <a href="../index.html" class="logo">INFRANEX</a>
+            <button class="mobile-menu-toggle" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-nav">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            </button>
+            <nav class="main-nav" id="main-nav">
+                <ul class="nav-links">
+                    <li><a href="../index.html#services">Services</a></li>
+                    <li><a href="../index.html#case-studies">Case Studies</a></li>
+                    <li><a href="../index.html#approach">Approach</a></li>
+                    <li><a href="../index.html#about">About</a></li>
+                    <li><a href="../index.html#faq">FAQ</a></li>
+                    <li><a href="../index.html#contact">Contact</a></li>
+                </ul>
+                <a href="../index.html#contact" class="btn btn-primary nav-cta">Discuss Your Azure Project</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- BREADCRUMB & HERO -->
+        <article class="article-container">
+            <div class="pt-32 pb-8">
+                <a href="../index.html#case-studies" class="breadcrumb">&larr; Back to Reference Architectures</a>
+                <span class="eyebrow">REFERENCE ARCHITECTURE</span>
+                <h1 class="page-title">Production SaaS Platform on Azure</h1>
+                <p class="section-lead">Secure, scalable and operationally manageable Azure infrastructure for a production SaaS workload.</p>
+                <div class="notice">Reference architecture illustrating the INFRANEX approach to production Azure infrastructure. This is not presented as a client engagement.</div>
+            </div>
+
+            <!-- THE CHALLENGE -->
+            <section class="article-section mt-2">
+                <h2>The challenge</h2>
+                <p>A SaaS application needs a production-ready Azure environment capable of supporting application workloads while addressing secure internet ingress, application and database isolation, secrets management, identity and access control, repeatable infrastructure deployment, CI/CD, monitoring, high availability and disaster recovery.</p>
+                <p>The architecture should provide a strong production foundation without introducing unnecessary Azure services or operational complexity.</p>
+            </section>
+
+            <!-- ARCHITECTURE DIAGRAM -->
+            <section class="article-section">
+                <div class="diagram-header">
+                    <span class="diagram-title">Conceptual production Azure architecture</span>
+                </div>
+                <svg viewBox="0 0 1000 700" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 100%; height: auto; border: 1px solid var(--border-color); background: var(--bg-primary);">
+                    <defs>
+                        <pattern id="grid-cs" width="40" height="40" patternUnits="userSpaceOnUse">
+                            <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#F5F8FC" stroke-width="1"/>
+                        </pattern>
+                        <marker id="arrow-cs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#0078D4"/>
+                        </marker>
+                        <marker id="arrow-grey-cs" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                            <path d="M 0 0 L 10 5 L 0 10 z" fill="#DDE5EE"/>
+                        </marker>
+                    </defs>
+                    <rect width="100%" height="100%" fill="url(#grid-cs)" />
+
+                    <!-- DEVOPS PIPELINE (LEFT) -->
+                    <rect x="40" y="40" width="220" height="620" fill="#F5F8FC" stroke="#DDE5EE" stroke-width="1"/>
+                    <text x="150" y="70" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Azure DevOps + Terraform</text>
+
+                    <!-- Pipeline Steps -->
+                    <rect x="70" y="100" width="160" height="40" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="150" y="125" fill="#526070" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">1. Code &amp; PR</text>
+                    <path d="M 150 140 L 150 170" stroke="#DDE5EE" stroke-width="2" marker-end="url(#arrow-grey-cs)"/>
+
+                    <rect x="70" y="170" width="160" height="40" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="150" y="195" fill="#526070" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">2. Validate</text>
+                    <path d="M 150 210 L 150 240" stroke="#DDE5EE" stroke-width="2" marker-end="url(#arrow-grey-cs)"/>
+
+                    <rect x="70" y="240" width="160" height="40" fill="#FFFFFF" stroke="#0078D4" stroke-width="2"/>
+                    <text x="150" y="265" fill="#0078D4" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">3. Terraform Plan</text>
+                    <path d="M 150 280 L 150 310" stroke="#DDE5EE" stroke-width="2" marker-end="url(#arrow-grey-cs)"/>
+
+                    <rect x="70" y="310" width="160" height="40" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="150" y="335" fill="#526070" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">4. Review / Approval</text>
+                    <path d="M 150 350 L 150 380" stroke="#DDE5EE" stroke-width="2" marker-end="url(#arrow-grey-cs)"/>
+
+                    <rect x="70" y="380" width="160" height="40" fill="#FFFFFF" stroke="#0078D4" stroke-width="2"/>
+                    <text x="150" y="405" fill="#0078D4" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">5. Apply</text>
+                    <path d="M 150 420 L 150 450" stroke="#DDE5EE" stroke-width="2" marker-end="url(#arrow-grey-cs)"/>
+
+                    <rect x="70" y="450" width="160" height="40" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="150" y="475" fill="#526070" font-size="12" font-family="Inter" font-weight="600" text-anchor="middle">6. Post-deploy Validation</text>
+
+                    <!-- Connect DevOps to Azure -->
+                    <path d="M 230 400 L 320 400" stroke="#0078D4" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cs)"/>
+                    <text x="275" y="390" fill="#0078D4" font-size="10" font-family="Inter" text-anchor="middle">Deploys</text>
+
+                    <!-- AZURE ARCHITECTURE (RIGHT) -->
+                    <!-- Internet -->
+                    <text x="650" y="60" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Internet</text>
+                    <path d="M 650 70 L 650 110" stroke="#0078D4" stroke-width="2" marker-end="url(#arrow-cs)"/>
+                    <text x="660" y="95" fill="#526070" font-size="10" font-family="Inter">HTTPS</text>
+
+                    <!-- Gateway -->
+                    <rect x="450" y="110" width="400" height="60" fill="#FFFFFF" stroke="#0078D4" stroke-width="2"/>
+                    <text x="650" y="145" fill="#0078D4" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Application Gateway + WAF</text>
+                    <path d="M 650 170 L 650 210" stroke="#0078D4" stroke-width="2" marker-end="url(#arrow-cs)"/>
+                    
+                    <!-- VNET -->
+                    <rect x="320" y="210" width="640" height="360" fill="none" stroke="#DDE5EE" stroke-width="2" stroke-dasharray="6 6"/>
+                    <text x="340" y="235" fill="#526070" font-size="12" font-family="Inter" font-weight="600">Private Network (VNet)</text>
+
+                    <!-- Application Workload -->
+                    <rect x="360" y="260" width="560" height="80" fill="#EAF5FF" stroke="#0078D4" stroke-width="1"/>
+                    <text x="640" y="290" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Application Workload</text>
+                    <text x="640" y="315" fill="#526070" font-size="12" font-family="Inter" text-anchor="middle">App Service / Container Apps / AKS</text>
+
+                    <path d="M 480 340 L 480 390" stroke="#0078D4" stroke-width="2" marker-end="url(#arrow-cs)"/>
+                    <path d="M 800 340 L 800 390" stroke="#0078D4" stroke-width="2" stroke-dasharray="4 4" marker-end="url(#arrow-cs)"/>
+
+                    <!-- Private DB -->
+                    <rect x="360" y="390" width="240" height="100" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="480" y="420" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Azure SQL</text>
+                    <rect x="420" y="440" width="120" height="30" fill="#F5F8FC" stroke="#DDE5EE" stroke-width="1"/>
+                    <text x="480" y="460" fill="#526070" font-size="10" font-family="Inter" text-anchor="middle">Private Endpoint</text>
+                    
+                    <rect x="360" y="510" width="240" height="30" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="480" y="530" fill="#526070" font-size="10" font-family="Inter" text-anchor="middle">Private DNS</text>
+                    <path d="M 480 490 L 480 510" stroke="#DDE5EE" stroke-width="1" stroke-dasharray="2 2"/>
+
+                    <!-- Security (Key Vault) -->
+                    <rect x="680" y="390" width="240" height="100" fill="#FFFFFF" stroke="#DDE5EE" stroke-width="2"/>
+                    <text x="800" y="420" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Key Vault</text>
+                    <rect x="740" y="440" width="120" height="30" fill="#F5F8FC" stroke="#DDE5EE" stroke-width="1"/>
+                    <text x="800" y="460" fill="#526070" font-size="10" font-family="Inter" text-anchor="middle">Managed Identity</text>
+
+                    <!-- Observability -->
+                    <rect x="320" y="600" width="640" height="60" fill="#FFFFFF" stroke="#172033" stroke-width="2"/>
+                    <text x="640" y="625" fill="#172033" font-size="14" font-family="Inter" font-weight="600" text-anchor="middle">Observability</text>
+                    <text x="640" y="645" fill="#526070" font-size="12" font-family="Inter" text-anchor="middle">Azure Monitor / Log Analytics / Application Insights</text>
+
+                    <!-- Logging Lines -->
+                    <path d="M 480 540 L 480 600" stroke="#172033" stroke-width="1" stroke-dasharray="2 2"/>
+                    <path d="M 800 490 L 800 600" stroke="#172033" stroke-width="1" stroke-dasharray="2 2"/>
+                    <path d="M 940 340 L 940 600" stroke="#172033" stroke-width="1" stroke-dasharray="2 2"/>
+                </svg>
+            </section>
+
+            <!-- ARCHITECTURAL DECISIONS -->
+            <section class="article-section">
+                <h2>Architectural decisions</h2>
+                
+                <h3>Decision 01: Regional ingress</h3>
+                <p>For a regional application, Application Gateway with WAF provides Layer 7 routing, web application firewall capabilities and private backend integration.</p>
+                <p>Front Door can be introduced when global entry, multi-region routing, edge acceleration or global failover is required.</p>
+                <p>For a global multi-region architecture, Front Door can provide the global entry point while Application Gateway handles regional ingress.</p>
+
+                <h3>Decision 02: Application platform</h3>
+                <p>App Service is appropriate for standard web/API workloads with minimal operational overhead.</p>
+                <p>Container Apps can be used for containerized workloads that do not require full Kubernetes control.</p>
+                <p>AKS is appropriate for complex microservices, Kubernetes-native requirements, advanced networking and orchestration.</p>
+                <p>VMs remain appropriate when OS-level control, legacy software or workloads that cannot be modernized require them.</p>
+                <div class="highlight-box">Do not choose AKS simply because it is more advanced.</div>
+
+                <h3>Decision 03: Private database connectivity</h3>
+                <p>Prefer Azure SQL Private Endpoint for production workloads where private connectivity is appropriate. The application resolves the SQL FQDN through Private DNS and communicates over the Azure/private network.</p>
+
+                <h3>Decision 04: Identity and secrets</h3>
+                <p>Use Azure Key Vault for secrets and Managed Identity wherever possible. Applications should not embed credentials in source code, pipelines or configuration files.</p>
+                <p>Use Microsoft Entra ID and RBAC following least-privilege principles.</p>
+
+                <h3>Decision 05: Infrastructure as Code</h3>
+                <p>Terraform is utilized to provision and manage the entire environment, including:</p>
+                <ul>
+                    <li>VNets/subnets</li>
+                    <li>NSGs</li>
+                    <li>route tables</li>
+                    <li>application platforms</li>
+                    <li>Key Vault</li>
+                    <li>Azure SQL</li>
+                    <li>private endpoints</li>
+                    <li>monitoring</li>
+                    <li>supporting resources</li>
+                </ul>
+                <p>Reusable modules and workspace configurations ensure environment separation across Dev, Stage/UAT, and Production.</p>
+
+                <h3>Decision 06: CI/CD</h3>
+                <p>Azure DevOps acts as the orchestrator for infrastructure state and application delivery. The pipeline strictly enforces the deployment process:</p>
+                <p class="mt-2" style="font-weight: 500; color: var(--azure-blue);">Code &rarr; PR &rarr; Validate &rarr; Terraform Plan &rarr; Review / Approval &rarr; Apply &rarr; Post-deployment Validation</p>
+
+                <h3>Decision 07: Observability</h3>
+                <p>The environment relies on Azure Monitor, Log Analytics, Application Insights, Diagnostic Settings, Alerts, and Dashboards.</p>
+                <p>Monitoring covers application health, infrastructure metrics, logs, failures, availability and important security/operational events.</p>
+            </section>
+
+            <!-- DESIGN FOR FAILURE -->
+            <section class="article-section">
+                <h2>Design for failure</h2>
+                <p>Production deployments should not rely on a single application instance.</p>
+                <div class="comparison-grid">
+                    <div class="comparison-item">
+                        <h4>App Service</h4>
+                        <p>Multiple instances and health checks automatically handle failed nodes.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>AKS</h4>
+                        <p>Native failed pod rescheduling and self-healing orchestration.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Container Apps</h4>
+                        <p>Automatic unhealthy replica replacement.</p>
+                    </div>
+                    <div class="comparison-item">
+                        <h4>Application Gateway</h4>
+                        <p>Stops routing traffic to unhealthy backends based on probes.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- DISASTER RECOVERY -->
+            <section class="article-section">
+                <h2>Disaster recovery is an architecture decision</h2>
+                <p>Regional disaster recovery planning relies on establishing the target <strong>RTO</strong> (Recovery Time Objective) and <strong>RPO</strong> (Recovery Point Objective).</p>
+                <p>Depending on critical services, acceptable downtime, and data loss limits, regional disaster recovery depends on:</p>
+                <ul>
+                    <li>database replication/failover</li>
+                    <li>storage redundancy</li>
+                    <li>secondary-region infrastructure</li>
+                    <li>DNS/traffic cutover</li>
+                    <li>private networking</li>
+                    <li>Key Vault/secrets dependencies</li>
+                    <li>runbooks</li>
+                    <li>regular DR testing</li>
+                </ul>
+                <div class="notice">Terraform can help recreate infrastructure consistently in the recovery region.</div>
+            </section>
+
+            <!-- ENGINEERING RESTRAINT -->
+            <section class="article-section section-alt" style="padding: 3rem; border-radius: 8px;">
+                <h2>Engineering restraint matters</h2>
+                <p>Not every production workload needs every Azure service. Unnecessary complexity introduces operational risk.</p>
+                <ul>
+                    <li>AKS when App Service or Container Apps is sufficient</li>
+                    <li>Azure Firewall without a justified security/network requirement</li>
+                    <li>Front Door for a single regional application</li>
+                    <li>multi-region active-active without an RTO/RPO justification</li>
+                    <li>excessive subnetting</li>
+                    <li>multiple gateways/load balancers without a traffic requirement</li>
+                    <li>complex Terraform module structures for small deployments</li>
+                </ul>
+                <div class="highlight-box" style="background: var(--bg-primary); margin-bottom: 0;">The architecture should solve the requirement&mdash;not maximize the number of Azure services.</div>
+            </section>
+
+            <!-- SCALING -->
+            <section class="article-section">
+                <h2>Designed to evolve</h2>
+                <p>If workload demand increases significantly, the first step is not simply increasing every resource.</p>
+                <p>Areas requiring reassessment before aggressive scaling include compute scaling, application platform, database sizing, read/write patterns, caching, asynchronous processing, network capacity, load balancing, monitoring thresholds, HA architecture, DR capacity, Terraform/deployment scalability, and cost.</p>
+                <div class="highlight-box">Identify the actual bottleneck before changing the architecture.</div>
+            </section>
+
+            <!-- TECHNOLOGY -->
+            <section class="article-section">
+                <h2>Technology</h2>
+                <div class="tech-ecosystem" style="gap: 3rem;">
+                    <div class="tech-group">
+                        <h3>Core Platform</h3>
+                        <ul>
+                            <li>Microsoft Azure</li>
+                            <li>Application Gateway</li>
+                            <li>WAF</li>
+                            <li>App Service / Container Apps / AKS</li>
+                        </ul>
+                    </div>
+                    <div class="tech-group">
+                        <h3>Data &amp; Security</h3>
+                        <ul>
+                            <li>Azure SQL</li>
+                            <li>Private Endpoint &amp; DNS</li>
+                            <li>Key Vault</li>
+                            <li>Managed Identity / Entra ID</li>
+                        </ul>
+                    </div>
+                    <div class="tech-group">
+                        <h3>Operations</h3>
+                        <ul>
+                            <li>Terraform</li>
+                            <li>Azure DevOps</li>
+                            <li>Azure Monitor &amp; Log Analytics</li>
+                            <li>Application Insights</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ARCHITECTURE PRINCIPLE -->
+            <section class="article-section principle-callout">
+                <p>"Build the simplest architecture that satisfies the workload's security, reliability, scalability and operational requirements."</p>
+            </section>
+        </article>
+        
+        <!-- CONTACT CTA -->
+        <section class="section section-alt text-center">
+            <div class="container contact-container">
+                <h2>Planning an Azure project?</h2>
+                <p class="section-lead">Share your current environment, application requirements or infrastructure challenge.</p>
+                <div class="cta-actions">
+                    <a href="../index.html#contact" class="btn btn-primary btn-large">Discuss Your Azure Project</a>
+                    <a href="../index.html#case-studies" class="btn btn-secondary btn-large">Back to Reference Architectures</a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-container">
+            <div class="footer-brand">
+                <div class="logo">INFRANEX</div>
+                <p>Azure Cloud Infrastructure & DevOps</p>
+            </div>
+            <div class="footer-links-grid">
+                <div class="footer-col">
+                    <h4>Navigation</h4>
+                    <ul>
+                        <li><a href="../index.html#services">Services</a></li>
+                        <li><a href="../index.html#case-studies">Case Studies</a></li>
+                        <li><a href="../index.html#about">About</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact & Connect</h4>
+                    <ul>
+                        <li><a href="mailto:hello@yourdomain.com">Contact</a></li>
+                        <li><a href="https://fiverr.com/yourprofile">Fiverr</a></li>
+                        <li><a href="https://github.com/yourprofile">GitHub</a></li>
+                        <li><a href="https://linkedin.com/in/yourprofile">LinkedIn</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; <script>document.write(new Date().getFullYear())</script> INFRANEX. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
